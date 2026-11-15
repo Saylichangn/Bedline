@@ -1,0 +1,28 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+# Deploy: Dashboard → New → Blueprint → connect Saylichangn/Bedline
+# Or: https://render.com/deploy?repo=https://github.com/Saylichangn/Bedline
+
+services:
+  - type: web
+    name: bedline
+    runtime: docker
+    plan: free
+    region: oregon
+    branch: main
+    repo: https://github.com/Saylichangn/Bedline
+    healthCheckPath: /api/health
+    envVars:
+      - key: PORT
+        value: "8000"
+      - key: ALLOWED_ORIGINS
+        value: https://bogieflow.vercel.app,https://faraway-2026-japan.vercel.app
+      - key: ALLOWED_ORIGIN_REGEX
+        value: https://.*\.vercel\.app
+      - key: GUIDE_AI_MODEL
+        value: gemini-3.1-flash-lite
+      - key: GUIDE_AI_API_KEY
+        sync: false
+      - key: BOGIE_API_SECRET
+        sync: false
+      - key: BOGIE_TRAIN_USE_REAL
+        value: "true"

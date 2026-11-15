@@ -1,0 +1,14 @@
+# Global owners
+* @Saylichangn
+
+# Backend and Agents
+/server/ @Saylichangn
+/tests/ @Saylichangn
+
+# Frontend Dashboard
+/src/ @Saylichangn
+/index.html @Saylichangn
+/vite.config.js @Saylichangn
+
+# CI/CD and Automation workflows
+/.github/ @Saylichangn

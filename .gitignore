@@ -1,0 +1,27 @@
+# .gitignore
+
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.env
+node_modules/
+dist/
+public/corridor-frames-temp/
+assets/screenshots/temp_frames/
+.cursor/
+.research/
+temp/
+.DS_Store
+
+# Bogie Flow specific ignores
+bedline.egg-info/
+.superpowers/
+server/data/*.csv
+server/data/*.json
+server/agents/risk_model.meta.json
+
+
+.vercel
+.env*.local

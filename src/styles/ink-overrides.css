@@ -1,0 +1,192 @@
+/* Final ink overrides — purge residual hue accents from legacy CSS */
+
+.corridor-scrub-rail,
+.corridor-scrub-thumb,
+.corridor-viewport:focus-visible {
+  border-color: var(--line-strong) !important;
+  outline-color: var(--paper) !important;
+  box-shadow: none !important;
+}
+
+.hud-cell,
+.segment-strip .hud-cell {
+  border-radius: var(--radius-soft);
+  box-shadow: none;
+}
+
+.hud-critical {
+  background: var(--ink-900);
+}
+
+.severity-critical,
+.status-critical {
+  color: var(--signal);
+  border-color: var(--signal);
+}
+
+.status-nominal {
+  color: var(--paper-dim);
+  border-color: var(--line);
+}
+
+.btn-authorize {
+  background: var(--paper);
+  color: var(--ink-900);
+  border: none;
+  border-radius: var(--radius-soft);
+  box-shadow: none;
+}
+
+.btn-authorize:hover:not(:disabled) {
+  background: var(--paper-dim);
+}
+
+.chart-swatch-bar {
+  background: var(--paper-dim);
+}
+
+.chart-swatch-line {
+  background: var(--paper-muted);
+}
+
+.correlation-svg rect {
+  fill: var(--paper-dim);
+}
+
+.data-kind-pill {
+  border: 1px solid var(--line);
+  color: var(--paper-muted);
+  background: transparent;
+  border-radius: var(--radius-soft);
+}
+
+.impact-metric-value {
+  font-family: var(--font-mono);
+  font-size: var(--type-lg);
+  font-variant-numeric: tabular-nums;
+}
+
+.impact-estimate-tag {
+  color: var(--paper-muted);
+  border: 1px solid var(--line);
+}
+
+.weather-toggle-segmented {
+  margin-bottom: 8px;
+}
+
+.climate-page-controls {
+  margin-bottom: var(--gutter);
+}
+
+.maintenance-table .status-pill.status-critical {
+  border-left: 2px solid var(--signal);
+}
+
+.empty-state-nominal {
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+  color: var(--paper-dim);
+}
+
+.model-card-panel {
+  margin-top: var(--gutter);
+}
+
+.model-card-badge {
+  font-size: var(--type-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid var(--line);
+  padding: 2px 8px;
+  border-radius: var(--radius-soft);
+}
+
+.model-card-badge-validated {
+  color: var(--ink);
+}
+
+.model-card-badge-simulated {
+  color: var(--paper-muted);
+}
+
+.model-card-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.model-card-metric-label {
+  display: block;
+  font-size: var(--type-xs);
+  color: var(--paper-muted);
+}
+
+.model-card-metric-value {
+  font-family: var(--font-mono);
+  font-size: var(--type-md);
+  font-variant-numeric: tabular-nums;
+}
+
+.model-card-body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.model-card-confusion-svg {
+  width: min(100%, 180px);
+  height: auto;
+  color: var(--ink);
+}
+
+.model-card-axis-label {
+  font-size: 9px;
+  fill: var(--paper-muted);
+  font-family: var(--font-mono);
+}
+
+.model-card-cell-count {
+  font-size: 9px;
+  fill: var(--ink);
+}
+
+.model-card-importances {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  min-width: 140px;
+}
+
+.model-card-importances li {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--line-faint);
+  font-size: var(--type-sm);
+}
+
+.model-card-error {
+  font-size: var(--type-sm);
+  color: var(--paper-muted);
+  margin: 0;
+}
+
+.model-card-provenance,
+.model-card-cv-disclaimer {
+  font-size: var(--type-xs);
+  color: var(--paper-muted);
+  margin: 0 0 12px;
+  line-height: 1.4;
+}
+
+.model-card-cv-disclaimer {
+  margin-top: 8px;
+  margin-bottom: 12px;
+  font-style: italic;
+}
+
