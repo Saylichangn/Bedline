@@ -1,0 +1,177 @@
+# WebSocket Message Schema — Bogie Flow
+
+Single source of truth for backend ↔ frontend. Six segments: **S1–S6**.
+
+## Connection
+
+- **URL:** `ws://localhost:8000/ws` (dev proxy: same host as Vite on `/ws`)
+- On connect, server sends `state_snapshot` then streams events on tick (~500ms) and on inject.
+
+## Message types
+
+### `state_snapshot`
+
+Full sync on connect.
+
+```json
+{
+  "type": "state_snapshot",
+  "segments": [
+    {
+      "id": "S1",
+      "risk_index": 0.12,
+      "k_effective": 95.2,
+      "state": "HEALTHY",
+      "color": "#22c55e",
+      "rainfall": 0.1,
+      "soil_moisture": 0.2,
+      "vib_z": 0.0,
+      "az": 0.3
+    }
+  ],
+  "train": { "segment_id": "S2", "progress": 0.45 },
+  "tickets": [],
+  "logs": [],
+  "active_risk_index": 0.12
+}
+```
+
+### `segment_update`
+
+Emitted when hydrology or planner changes segment risk.
+
+```json
+{
+  "type": "segment_update",
+  "id": "S4",
+  "risk_index": 0.87,
+  "k_effective": 65.2,
+  "state": "CRITICAL_MUD_PUMPING",
+  "color": "#ef4444",
+  "rainfall": 0.9,
+  "soil_moisture": 0.85,
+  "vib_z": 4.0,
+  "az": 2.8
+}
+```
+
+### `telemetry`
+
+Bogie vibration sample — feeds live metrics (peak amplitude, z-score) on Overview and Analysis.
+
+```json
+{
+  "type": "telemetry",
+  "segment": "S4",
+  "az": 1.85,
+  "z_score": 4.2,
+  "timestamp": 1718366400.5
+}
+```
+
+### `train_update`
+
+Train position along the current segment (0–1 progress).
+
+```json
+{
+  "type": "train_update",
+  "segment_id": "S3",
+  "progress": 0.72
+}
+```
+
+### `ticket`
+
+```json
+{
+  "type": "ticket",
+  "id": "T-001",
+  "priority": "P1",
+  "segment": "S4",
+  "reason": "ML fusion: CRITICAL hydrology + vibration anomaly on degraded ballast",
+  "status": "open",
+  "model_label": "P1"
+}
+```
+
+Status may update to `"closed"` when a segment recovers to HEALTHY.
+
+### `agent_log`
+
+```json
+{
+  "type": "agent_log",
+  "agent": "hydrology",
+  "message": "S4: Hydrology index 87.0%. Effective stiffness at 65.2% of nominal.",
+  "timestamp": 1718366401.0
+}
+```
+
+### `forecast` (additive)
+
+30-minute risk projection per segment from rainfall/soil trends and the decay model.
+
+```json
+{
+  "type": "forecast",
+  "horizon_minutes": 30,
+  "inspect_next": ["S4", "S2", "S1"],
+  "segments": [
+    {
+      "id": "S4",
+      "projected_risk": 0.82,
+      "sparkline": [0.75, 0.78, 0.82],
+      "time_to_critical_min": 12.5,
+      "status": "rising"
+    }
+  ]
+}
+```
+
+### `impact` (additive)
+
+Quantified estimates from live risk and open tickets (labeled as estimates).
+
+```json
+{
+  "type": "impact",
+  "prevented_cost_usd": 125000,
+  "inspection_hours_saved": 14.5,
+  "derailment_reduction_pct": 42.3,
+  "assumptions": { "label": "estimates — not audited financials" }
+}
+```
+
+### `weather_status` (additive)
+
+Open-Meteo toggle state when live weather is enabled or fallback occurs.
+
+```json
+{
+  "type": "weather_status",
+  "live_weather": true,
+  "source": "simulation",
+  "note": "fell back to sim"
+}
+```
+
+## Color mapping
+
+| State | Color |
+|-------|-------|
+| `HEALTHY` | `#22c55e` (green) |
+| `WARNING_WATERLOGGING` | `#eab308` (yellow) |
+| `CRITICAL_MUD_PUMPING` | `#ef4444` (red) |
+
+## REST inject (demo controls)
+
+- `GET /health`, `GET /api/health` — service status
+- `POST /api/inject/monsoon` — `{ "segment_id": "S4", "rainfall": 0.9, "soil_moisture": 0.85 }`
+- `POST /api/inject/anomaly` — `{ "segment_id": "S4" }` (diagnostic backup)
+- `POST /api/sim/reset` — reset corridor to nominal baseline
+- `POST /api/weather/mode` — `{ "live": true }` toggle Open-Meteo feed
+- `GET /api/impact` — current quantified impact snapshot
+- `GET /api/tickets/{id}/explain` — XAI factors + model importances + rationale
+
+Returns **503** when the simulation engine is not ready.

@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use Bogie Flow in your research or hackathon reviews, please cite it as follows."
+authors:
+  - family-names: "Changan"
+    given-names: "Sayli"
+    email: "318645748+Saylichangn@users.noreply.github.com"
+title: "Bogie Flow: Climate-Aware Track-Bed Telemetry Fusion & Predictive Maintenance"
+version: 1.6.0
+date-released: 2026-06-14
+url: "https://github.com/Saylichangn/Bogieflow"
+repository-code: "https://github.com/Saylichangn/Bogieflow"
+license: "MIT"
+keywords:
+  - railways
+  - digital-twin
+  - predictive-maintenance
+  - multi-agent-systems
+  - machine-learning

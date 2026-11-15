@@ -1,0 +1,54 @@
+{
+  "name": "@saylichangn/bogie-flow-dashboard",
+  "version": "1.7.1",
+  "description": "Vite-React dashboard UI for Bogieflow track-bed monitoring system",
+  "type": "module",
+  "main": "./dist/index.html",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "scripts": {
+    "dev": "vite",
+    "dev:all": "concurrently -k -n api,web -c blue,green \"python -m uvicorn server.main:app --reload --port 8000\" \"npm run dev\"",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "shots": "node scripts/capture-screenshots.mjs",
+    "shots:ink": "node scripts/capture-ink-screenshots.mjs",
+    "start": "python -m uvicorn server.main:app --host 0.0.0.0 --port 8000"
+  },
+  "dependencies": {
+    "framer-motion": "^12.40.0",
+    "lucide-react": "^0.511.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.2",
+    "vite": "^6.0.0",
+    "vitest": "^3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Saylichangn/Bogieflow.git"
+  },
+  "keywords": [
+    "railways",
+    "dashboard",
+    "digital-twin",
+    "telemetry",
+    "react",
+    "vite"
+  ],
+  "author": "Sayli Changan <318645748+Saylichangn@users.noreply.github.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Saylichangn/Bogieflow/issues"
+  },
+  "homepage": "https://github.com/Saylichangn/Bogieflow#readme"
+}
